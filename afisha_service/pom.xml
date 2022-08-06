@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>by.it-academy</groupId>
-    <artifactId>afisha</artifactId>
+    <artifactId>afisha_service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>afisha</name>
     <description>afisha</description>

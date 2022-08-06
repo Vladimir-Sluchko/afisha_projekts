@@ -41,11 +41,11 @@ CREATE TABLE afisha.films
 (
     country uuid NOT NULL,
     duration integer NOT NULL,
-    release_date bigint NOT NULL,
-    release_year bigint NOT NULL,
+    release_date date NOT NULL,
+    release_year integer NOT NULL,
     uuid_film uuid NOT NULL,
     PRIMARY KEY (uuid_film),
-    CONSTRAINT f_key_film FOREIGN KEY (uuid_film)
+    FOREIGN KEY (uuid_film)
         REFERENCES afisha.events (uuid) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

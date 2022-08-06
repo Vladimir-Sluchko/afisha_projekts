@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/user_service/User.iml" filepath="$PROJECT_DIR$/user_service/User.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/afisha_projekts.iml" filepath="$PROJECT_DIR$/.idea/afisha_projekts.iml" />
-      <module fileurl="file://$PROJECT_DIR$/classifier_service/classifier_service.iml" filepath="$PROJECT_DIR$/classifier_service/classifier_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/event_service/afisha_service/afisha_service.iml" filepath="$PROJECT_DIR$/event_service/afisha_service/afisha_service.iml" />
       <module fileurl="file://$PROJECT_DIR$/afisha_service/events_service.iml" filepath="$PROJECT_DIR$/afisha_service/events_service.iml" />
     </modules>
   </component>

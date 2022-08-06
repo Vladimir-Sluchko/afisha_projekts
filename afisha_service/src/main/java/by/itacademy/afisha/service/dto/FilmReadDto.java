@@ -17,6 +17,7 @@ public class FilmReadDto {
     private Long dtEndOfSale;
     private Type type;
     private Status status;
+    private String author;
 
     public FilmReadDto() {
     }
@@ -24,8 +25,8 @@ public class FilmReadDto {
     public FilmReadDto(String uuid, LocalDateTime dtCreate,
                        LocalDateTime dtUpdate, String title,
                        String description, Long dtEvent,
-                       Long dtEndOfSale, Type type, Status status
-                       ) {
+                       Long dtEndOfSale, Type type, Status status,
+                       String author) {
         this.uuid = uuid;
         this.dtCreate = dtCreate;
         this.dtUpdate = dtUpdate;
@@ -35,6 +36,7 @@ public class FilmReadDto {
         this.dtEndOfSale = dtEndOfSale;
         this.type = type;
         this.status = status;
+        this.author = author;
     }
 
     public String getUuid() {
@@ -109,4 +111,11 @@ public class FilmReadDto {
         this.status = status;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 }

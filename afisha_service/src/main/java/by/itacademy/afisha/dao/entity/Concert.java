@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "events",schema = "afisha")
-@SecondaryTable(name = "concert",pkJoinColumns = @PrimaryKeyJoinColumn(name = "uuid_concert"),schema = "afisha_test")
+@SecondaryTable(name = "concert",pkJoinColumns = @PrimaryKeyJoinColumn(name = "uuid_concert"),schema = "afisha")
 public class Concert extends Event{
     private UUID category;
 

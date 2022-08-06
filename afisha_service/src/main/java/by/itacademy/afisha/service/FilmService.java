@@ -67,7 +67,7 @@ public class FilmService implements IFilmService {
         Page<Film> pageEntity;
 
         if(holder.getUser().getUsername() == null){
-            pageEntity = repository.findByTypeAndStatus(Type.CONCERTS, Status.PUBLISHED,pageRequest);
+            pageEntity = repository.findByTypeAndStatus(Type.FILMS, Status.PUBLISHED,pageRequest);
         } else if (!holder.getUser().getAuthorities()
                 .stream()
                 .filter(role -> "ADMIN".equals(role.getAuthority()))
@@ -93,7 +93,7 @@ public class FilmService implements IFilmService {
             throw new IllegalArgumentException("You cannot edit this post");
         });
 
-        if (!checkUuid.isCheckUuidCategory(eventFilm.getCountry())){
+        if (!checkUuid.isCheckUuidCountry(eventFilm.getCountry())){
             throw new OptimisticLockException("There is no such country in the directory");
         }
 

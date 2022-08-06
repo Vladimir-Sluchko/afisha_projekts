@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "events", schema ="afisha")
-@SecondaryTable(name = "films",pkJoinColumns = @PrimaryKeyJoinColumn(name ="uuid_film"), schema = "afisha_test")
+@SecondaryTable(name = "films",pkJoinColumns = @PrimaryKeyJoinColumn(name ="uuid_film"), schema = "afisha")
 public class Film extends Event{
     private UUID country;
     private Integer releaseYear;
