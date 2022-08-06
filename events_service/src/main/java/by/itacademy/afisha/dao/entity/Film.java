@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "event", schema ="afisha_test")
+@Table(name = "events", schema ="afisha")
 @SecondaryTable(name = "films",pkJoinColumns = @PrimaryKeyJoinColumn(name ="uuid_film"), schema = "afisha_test")
 public class Film extends Event{
     private UUID country;

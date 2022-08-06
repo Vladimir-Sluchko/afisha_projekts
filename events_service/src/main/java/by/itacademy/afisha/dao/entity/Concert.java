@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "event",schema = "afisha_test")
+@Table(name = "events",schema = "afisha")
 @SecondaryTable(name = "concert",pkJoinColumns = @PrimaryKeyJoinColumn(name = "uuid_concert"),schema = "afisha_test")
 public class Concert extends Event{
     private UUID category;
