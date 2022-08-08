@@ -72,9 +72,9 @@ public class FilmService implements IFilmService {
                 .stream()
                 .filter(role -> "ADMIN".equals(role.getAuthority()))
                 .findAny().isEmpty()){
-            pageEntity = repository.findByType(Type.CONCERTS,pageRequest);
+            pageEntity = repository.findByType(Type.FILMS,pageRequest);
         } else pageEntity = repository
-                .findByTypeAndStatusIsOrAuthorIs(Type.CONCERTS, Status.PUBLISHED, holder.getUser().getUsername(), pageRequest);
+                .findByTypeAndStatusIsOrAuthorIs(Type.FILMS, Status.PUBLISHED, holder.getUser().getUsername(), pageRequest);
 
         List<FilmReadDto> listDto = pageEntity
                 .getContent().stream().map(element -> mapper.map(element, FilmReadDto.class))

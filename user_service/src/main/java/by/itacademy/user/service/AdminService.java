@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.OptimisticLockException;
@@ -22,6 +23,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class AdminService implements IAdminService {
     private final UserRepository repository;
     private final ModelMapper mapper;
@@ -36,6 +38,7 @@ public class AdminService implements IAdminService {
 
 
     @Override
+    @Transactional
     public CreatUserDto create(CreatUserDto dto) {
         User entity = conversionService.convert(dto, User.class);
         repository.save(entity);
@@ -68,6 +71,7 @@ public class AdminService implements IAdminService {
     }
 
     @Override
+    @Transactional
     public CreatUserDto update(CreatUserDto dto, UUID uuid, Long dtUpdate) {
         User entity = repository.findById(uuid).orElseThrow(()-> {
             throw new EntityNotFoundException("There is no such user");

@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -21,6 +22,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class CategoryService implements ICategoryService {
     private final CategoryRepository repository;
     private final ModelMapper mapper;
@@ -32,6 +34,7 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
+    @Transactional
     public CategoryCreateDto create(CategoryCreateDto dto) {
         Category entity = mapper.map(dto,Category.class);
         LocalDateTime localDateTime = LocalDateTime.now();

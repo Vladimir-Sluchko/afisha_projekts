@@ -120,9 +120,7 @@ public class ConcertService implements IConcertService {
             concert.setDtEndOfSale(eventConcert.getDtEndOfSale());
             concert.setType(eventConcert.getType());
             concert.setStatus(eventConcert.getStatus());
-
             concert.setDtUpdate(LocalDateTime.now());
-
             repository.save(concert);
         } else {
             throw new OptimisticLockException("Entity already updated");

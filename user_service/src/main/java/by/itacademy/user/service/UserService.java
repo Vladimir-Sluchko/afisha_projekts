@@ -10,10 +10,12 @@ import by.itacademy.user.service.dto.*;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
 
 @Service
+@Transactional(readOnly = true)
 public class UserService implements IUserService {
     private final UserRepository repository;
     private final PasswordEncoder encoder;
@@ -25,6 +27,8 @@ public class UserService implements IUserService {
         this.conversionService = conversionService;
     }
 
+    @Override
+    @Transactional
     public RegistrationDto save(RegistrationDto dto) {
         if (repository.existsByMail(dto.getMail())) {
             throw new EntityExistsException("User already exists");

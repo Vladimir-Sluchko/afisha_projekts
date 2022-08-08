@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class CountryService implements ICountryService {
     private final CountryRepository repository;
     private final ModelMapper mapper;
@@ -31,6 +33,7 @@ public class CountryService implements ICountryService {
     }
 
     @Override
+    @Transactional
     public CountryCreateDto create(CountryCreateDto dto) {
         Country entity = mapper.map(dto, Country.class);
         LocalDateTime localDateTime = LocalDateTime.now();
