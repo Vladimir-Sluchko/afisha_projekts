@@ -10,7 +10,7 @@
     </parent>
     <groupId>by.it-academy</groupId>
     <artifactId>classifier_service</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>classifier_service</name>
     <description>classifier_service</description>
     <properties>

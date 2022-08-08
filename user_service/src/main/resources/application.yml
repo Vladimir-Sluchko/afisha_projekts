@@ -11,7 +11,7 @@ spring:
   datasource:
     username: postgres
     password: postgres
-    url: jdbc:postgresql://localhost:5432/users?currentSchema=security
+    url: jdbc:postgresql://db:5432/users?currentSchema=security
     driver-class-name: org.postgresql.Driver
 server:
-  port: 8082
+  port: 82

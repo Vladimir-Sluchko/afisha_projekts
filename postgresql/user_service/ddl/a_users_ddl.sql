@@ -1,18 +1,19 @@
-CREATE DATABASE "users";
+CREATE DATABASE users;
+
+GRANT ALL PRIVILEGES ON DATABASE postgres TO postgres;
+
+\connect users;
 
 CREATE SCHEMA security
     AUTHORIZATION postgres;
+
 
 CREATE TABLE security.roles
 (
     uuid uuid NOT NULL UNIQUE,
     role_name text NOT NULL UNIQUE
-);
-
-ALTER TABLE IF EXISTS security.roles
-    OWNER to postgres;
-
-
+)
+    TABLESPACE pg_default;
 
 CREATE TABLE security.users (
     uuid uuid NOT NULL UNIQUE,
@@ -27,13 +28,18 @@ CREATE TABLE security.users (
     PASSWORD text NOT NULL,
     username text NOT NULL UNIQUE,
     CONSTRAINT pk_users PRIMARY KEY (uuid)
-);
+)
+    TABLESPACE pg_default;
 
 
 CREATE TABLE security.users_roles (
     role_uuid uuid NOT NULL,
     user_uuid uuid NOT NULL
-);
+)
+    TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS security.roles
+    OWNER to postgres;
 
 ALTER TABLE IF EXISTS security.users_roles
     ADD CONSTRAINT fk_user_on_role FOREIGN KEY (role_uuid) REFERENCES security.roles (uuid);
@@ -41,18 +47,9 @@ ALTER TABLE IF EXISTS security.users_roles
 ALTER TABLE IF EXISTS security.users_roles
     ADD CONSTRAINT fk_user_on_user FOREIGN KEY (user_uuid) REFERENCES security.users (uuid);
 
-//
+
 ALTER TABLE security.users
     ADD CONSTRAINT uc_users_mail UNIQUE (mail);
 
-ALTER TABLE security.users_roles
-    ADD CONSTRAINT uc_users_roles_user_uuid UNIQUE (user_uuid);
-
 ALTER TABLE security.users
     ADD CONSTRAINT uc_users_uuid UNIQUE (uuid);
-
-ALTER TABLE security.users_roles
-    ADD CONSTRAINT fk_userol_on_role FOREIGN KEY (role_uuid) REFERENCES security.roles (uuid);
-
-ALTER TABLE security.users_roles
-    ADD CONSTRAINT fk_userol_on_user FOREIGN KEY (user_uuid) REFERENCES security.users (uuid);

@@ -1,3 +1,4 @@
+\connect users;
 INSERT INTO security.roles(
     uuid, role_name)
 VALUES ('611a0946-37c4-4427-9089-d01ad5722558', 'USER'),
@@ -25,7 +26,7 @@ VALUES (
            'admin@gmail.com',
            '$2a$10$IGppn9wQ71NugkAJOiB3C.TtRXeksW4IO.IxzdqWHCTxRfz65mUxq',
            'ACTIVATED',
-           'Admin'
+           'Admin',
            'ecb7990f-ba5a-4039-8bc8-375e8f908c77'
         );
 

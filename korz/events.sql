@@ -1,5 +1,7 @@
 CREATE DATABASE events;
 
+GRANT ALL PRIVILEGES ON DATABASE postgres TO postgres;
+
 CREATE SCHEMA afisha
     AUTHORIZATION postgres;
 
@@ -16,10 +18,8 @@ CREATE TABLE afisha.events
     type text NOT NULL,
     status text NOT NULL,
     PRIMARY KEY (uuid)
-);
-
-ALTER TABLE IF EXISTS afisha.events
-    OWNER to postgres;
+)
+    TABLESPACE pg_default;
 
 CREATE TABLE afisha.concert
 (
@@ -31,10 +31,8 @@ CREATE TABLE afisha.concert
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
-);
-
-ALTER TABLE IF EXISTS afisha.concert
-    OWNER to postgres;
+)
+    TABLESPACE pg_default;
 
 
 CREATE TABLE afisha.films
@@ -50,7 +48,14 @@ CREATE TABLE afisha.films
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
-);
+)
+    TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS afisha.films
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS afisha.events
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS afisha.concert
     OWNER to postgres;

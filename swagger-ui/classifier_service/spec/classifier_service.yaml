@@ -18,26 +18,22 @@ servers:
         default: "8080"
 
 tags:
-  - name: "События"
-    description: "Информация о событиях"
+  - name: "Справочники"
+    description: "Справочники для хранения системных классификаторов"
 
 paths:
-  /api/v1/afisha/event/{type}:
+  /api/v1/classifier/country:
     post:
       tags:
-        - "События"
-      summary: "Добавление нового события"
-      parameters:
-        - in: path
-          name: type
-          schema:
-            $ref: '#/components/schemas/EventType'
-          required: true
+        - "Справочники"
+      summary: Добавление новой страны
+      security:
+        - bearerAuth: [ROLE_ADMIN]
       requestBody:
-        $ref: "#/components/requestBodies/CreateEvent"
+        $ref: "#/components/requestBodies/CreateCountry"
       responses:
         '201':
-          description: "Событие добавлено"
+          description: Страна добавлена в справочник
         '400':
           $ref: '#/components/responses/Bad_Request'
         '401':
@@ -48,24 +44,23 @@ paths:
           $ref: '#/components/responses/Internal_Server_Error'
     get:
       tags:
-        - "События"
-      summary: "Получить страницу событий"
+        - "Справочники"
+      summary: Получить страницу стран
       parameters:
-        - in: path
-          name: type
-          schema:
-            $ref: '#/components/schemas/EventType'
-          required: true
         - in: query
           name: page
           schema:
             type: integer
+            minimum: 0
+            default: 0
           description: Номер страницы
           required: false
         - in: query
           name: size
           schema:
             type: integer
+            minimum: 1
+            default: 20
           description: Размер страницы
           required: false
       responses:
@@ -74,7 +69,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PageOfEvent'
+                $ref: '#/components/schemas/PageOfCountry'
         '400':
           $ref: '#/components/responses/Bad_Request'
         '401':
@@ -83,69 +78,54 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '500':
           $ref: '#/components/responses/Internal_Server_Error'
-  /api/v1/afisha/event/{type}/{uuid}:
+  /api/v1/classifier/concert/category:
+    post:
+      tags:
+        - "Справочники"
+      summary: Добавление новой категории концерта
+      security:
+        - bearerAuth: [ROLE_ADMIN]
+      requestBody:
+        $ref: "#/components/requestBodies/CreateConcertCategory"
+      responses:
+        '201':
+          description: Категория добавлена в справочник
+        '400':
+          $ref: '#/components/responses/Bad_Request'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/Internal_Server_Error'
     get:
       tags:
-        - "События"
-      summary: "Получить информацию по событию"
+        - "Справочники"
+      summary: Получить страницу категорий
       parameters:
-        - in: path
-          name: type
+        - in: query
+          name: page
           schema:
-            $ref: '#/components/schemas/EventType'
-          required: true
-        - in: path
-          name: uuid
-          description: "Идентификатор события"
-          required: true
+            type: integer
+            minimum: 0
+            default: 0
+          description: Номер страницы
+          required: false
+        - in: query
+          name: size
           schema:
-            type: string
-            format: uuid
+            type: integer
+            minimum: 1
+            default: 20
+          description: Размер страницы
+          required: false
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Event'
-        '400':
-          $ref: '#/components/responses/Bad_Request'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/Internal_Server_Error'
-  /api/v1/afisha/event/{type}/{uuid}/dt_update/{dt_update}:
-    put:
-      tags:
-        - "События"
-      summary: Редактировать информацию о событии
-      parameters:
-        - in: path
-          name: type
-          schema:
-            $ref: '#/components/schemas/EventType'
-          required: true
-        - in: path
-          name: uuid
-          description: "Идентификатор события"
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - in: path
-          name: dt_update
-          required: true
-          schema:
-            type: string
-            format: int64
-          description: "Дата последнего обновления записи"
-      requestBody:
-        $ref: "#/components/requestBodies/CreateEvent"
-      responses:
-        '200':
-          description: "Счёт обновлён"
+                $ref: '#/components/schemas/PageOfConcertCategory'
         '400':
           $ref: '#/components/responses/Bad_Request'
         '401':
@@ -157,15 +137,26 @@ paths:
 
 components:
   requestBodies:
-    CreateEvent:
-      description: Тело для создания События
+    CreateCountry:
+      description: Тело для страны
       required: true
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '#/components/schemas/EventFilm'
-              - $ref: '#/components/schemas/EventConcert'
+            $ref: '#/components/schemas/Country'
+    CreateConcertCategory:
+      description: Тело для категории
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ConcertCategory'
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
 
   responses:
     Bad_Request:
@@ -205,93 +196,50 @@ components:
             - logref: error
               message:  Сервер не смог корректно обработать запрос. Пожалуйста обратитесь к администратору
   schemas:
-    EventType:
-        type: string
-        description: |
-              Тип события:
-                * `FILMS` - Фильм
-                * `CONCERTS` - Концерт
-        enum:
-        - "FILMS"
-        - "CONCERTS"
-    EventStatus:
-        type: string
-        description: |
-              Статус события:
-                * `DRAFT` - Черновик
-                * `PUBLISHED` - Опубликовано
-        enum:
-        - "DRAFT"
-        - "PUBLISHED"          
-    Event:
-      type: object
-      description: Событие
+    Country:
+      description: Страна
       allOf:
         - $ref: '#/components/schemas/t_base_essence'
       properties:
         title:
           type: string
-          description: "Наименование"
+          description: "Название"
+          example: "RUS"
         description:
           type: string
-          description: "Описание"
-        dt_event:
-          type: integer
-          description: "Дата/время проведения (linux time)"
-          format: int64
-        dt_end_of_sale:
-          type: integer
-          description: "Дата/время окончания продажи билетов (linux time)"
-          format: int64
-        type:
-          $ref: '#/components/schemas/EventType'
-        status:
-          $ref: '#/components/schemas/EventStatus'
-    EventFilm:
-      type: object
-      description: Фильм
+          description: "Расшифровка"
+          example: "Россия"
+    ConcertCategory:
+      description: Категория концерта
       allOf:
-        - $ref: '#/components/schemas/Event'
+        - $ref: '#/components/schemas/t_base_essence'
       properties:
-        country:
+        title:
           type: string
-          format: uuid
-          description: "Страна (ссылка на справочник)"
-        release_year:
-          type: integer
-          description: "Год"
-          example: 2022
-        release_date:
-          type: string
-          format: date
-          description: "Дата премьеры"
-          example: "30 июня 2022"
-        duration:
-          type: integer
-          description: "Длительность (минуты)"
-          example: 100
-    EventConcert:
-      type: object
-      description: Концерт
-      allOf:
-        - $ref: '#/components/schemas/Event'
-      properties:
-        category:
-          type: string
-          format: uuid
-          description: "Категория  (ссылка на справочник)"
+          description: "Название"
+          example: "Стендап"
 
-    PageOfEvent:
+    PageOfCountry:
       type: object
-      description: Страница событий
+      description: Категории
       allOf:
         - $ref: '#/components/schemas/t_page'
       properties:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/Event'
-        
+            $ref: '#/components/schemas/Country'
+    PageOfConcertCategory:
+      type: object
+      description: Категории
+      allOf:
+        - $ref: '#/components/schemas/t_page'
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConcertCategory'
+
     t_base_essence:
       type: object
       description: Описание базовой сущности.
@@ -345,7 +293,7 @@ components:
           description: Признак является ли элемент первым
           type: boolean
         number_of_elements:
-          description: Номер элемента
+          description: Количество элементов на странице
           type: integer
         last:
           description: Признак является ли элемент последним

@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      volumes:
+    volumes:
         - /docker-entrypoint-initdb.d
     networks:
       - afisha_ntwrk
@@ -17,7 +17,7 @@ services:
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_PASSWORD: root
     ports:
       - "82:80"
     networks:
@@ -26,23 +26,23 @@ services:
     build: swagger-ui
     image: afisha_swagger-ui:1.0.0
     ports:
-      - "81:8080"
+      - "83:8080"
     networks:
       - afisha_ntwrk
 
-  events-service:
-    build: events-service
-    image: afisha_events-service:1.0.0
+  event-service:
+    build: afisha_service
+    image: afisha_service-1.0.0
     networks:
       - afisha_ntwrk
   classifier-service:
-    build: classifier-service
-    image: afisha_classifier-service:1.0.0
+    build: classifier_service
+    image: classifier_service-1.0.0
     networks:
       - afisha_ntwrk
   user-service:
-    build: Afisha-user
-    image: afisha_users-service:1.0.0
+    build: user_service
+    image: user_service-1.0.0.jar
     networks:
       - afisha_ntwrk
 

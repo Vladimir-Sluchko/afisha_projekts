@@ -10,9 +10,9 @@
     </parent>
     <groupId>by.it-academy</groupId>
     <artifactId>afisha_service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>afisha</name>
-    <description>afisha</description>
+    <version>1.0.0</version>
+    <name>afisha_service</name>
+    <description>afisha_service</description>
     <properties>
         <java.version>11</java.version>
     </properties>

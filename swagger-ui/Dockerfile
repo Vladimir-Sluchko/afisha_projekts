@@ -1,9 +1,10 @@
 FROM swaggerapi/swagger-ui:latest
-MAINTAINER Uladzimir
+MAINTAINER Grisha
 
-ADD /classifier-service/spec/classifier-service.yaml /usr/share/nginx/html/doc/classifier-service.yaml
-ADD /events-service/spec/events-service.yaml /usr/share/nginx/html/doc/events-service.yaml
-ADD /user-service/spec/user-service.yaml /usr/share/nginx/html/doc/user-service.yaml
+ADD /classifier_service/spec/classifier_service.yaml /usr/share/nginx/html/doc/classifier_service.yaml
+ADD /afisha_service/spec/afisha_service.yaml /usr/share/nginx/html/doc/afisha_service.yaml
+ADD /user_service/spec/user_service.yaml /usr/share/nginx/html/doc/user_service.yaml
 
-ENV URLS="[{ url: 'doc/classifier-service.yaml', name: 'Classifier'},{ url: 'doc/events-service.yaml', name: 'Events'},{ url: 'doc/user-service.yaml', name: 'Users'},]"
-ENV URLS_PRIMARY_NAME="Events"
+
+ENV URLS="[{ url: 'doc/classifier_service.yaml', name: 'Classifier'},{ url: 'doc/afisha_service.yaml', name: 'Afisha'},{ url: 'doc/user_service.yaml', name: 'User'}]"
+ENV URLS_PRIMARY_NAME="Afisha"
